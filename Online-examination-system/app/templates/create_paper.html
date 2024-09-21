@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Question Paper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>Create a Question Paper</h2>
+    <form action="{{ url_for('create_question_paper') }}" method="POST">
+        <label for="paper_name">Paper Name:</label>
+        <input type="text" name="paper_name" id="paper_name" required>
+
+        <label for="questions">Select Questions:</label>
+        <ul>
+        {% for question in questions %}
+            <li>
+                <input type="checkbox" name="questions" value="{{ question.id }}"> {{ question.question_text }}
+            </li>
+        {% endfor %}
+        </ul>
+
+        <button type="submit">Create Paper</button>
+    </form>
+</body>
+</html>

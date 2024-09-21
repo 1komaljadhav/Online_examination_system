@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Metrics</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Evaluation Metrics for Question {{ answer.question_id }}</h1>
+
+        <!-- Display Question and Student Answer -->
+         <p><strong>Student's Answer:</strong> {{ answer.answer_text }}</p>
+
+        <!-- Display Evaluation Metrics if Available -->
+        {% if evaluation %}
+        <h2>Metrics</h2>
+        <ul class="list-group mb-4">
+            <li class="list-group-item"><strong>Similarity Score:</strong> {{ evaluation.similarity }}%</li>
+            <li class="list-group-item"><strong>Grammar Mistakes:</strong> {{ evaluation.grammar_mistakes }}</li>
+            <li class="list-group-item"><strong>Word Count:</strong> {{ evaluation.word_count }}</li>
+            <li class="list-group-item"><strong>Summary of Answer:</strong> {{ evaluation.summary }}</li>
+            <li class="list-group-item"><strong>Predicted Marks:</strong> {{ evaluation.predicted_marks }}/10</li>
+        </ul>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            No evaluation metrics available.
+        </div>
+        {% endif %}
+
+        <!-- Form to Update Marks -->
+        <h2>Update Marks</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="marks">Marks:</label>
+                <input type="text" id="marks" name="marks" class="form-control" value="{{ evaluation.predicted_marks if evaluation else '' }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Marks</button>
+        </form>
+        <a class="btn btn-secondary mt-3" href="{{ url_for('main.view_metrics', student_id=answer.student_id, question_id=answer.question_id) }}">Back to Answers</a>
+
+       </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

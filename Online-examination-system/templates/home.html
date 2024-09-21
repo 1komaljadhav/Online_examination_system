@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluator Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Evaluator Dashboard</h1>
+        <div class="row mt-4">
+            <!-- Add Question Section -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Question</h5>
+                        <p class="card-text">Create and add a new question to the database.</p>
+                        <a href="{{ url_for('main.add_question') }}" class="btn btn-primary">Add Question</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Set Question Paper Section -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Set Question Paper</h5>
+                        <p class="card-text">Create a new question paper by selecting from existing questions.</p>
+                        <a href="{{ url_for('main.create_question_paper') }}" class="btn btn-primary">Set Question Paper</a> <!-- Fixed route name -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Check Question Papers</h5>
+                        <p class="card-text">Review and check the student Answer papers.</p>
+                        <a href="{{ url_for('main.evaluator_dashboard') }}" class="btn btn-primary">Evaluate Papers</a> <!-- Fixed route name -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Student Info Section -->
+        <h1>Welcome, {{ student.name }}</h1>
+        <p><strong>Student ID:</strong> {{ student.id }}</p>
+        <hr>
+
+        <!-- Available Exams Section -->
+        <h3>Available Exams:</h3>
+        <ul class="list-group">
+            {% for exam in available_exams %}
+            <li class="list-group-item">
+                <strong>{{ exam.name }}</strong> ({{ exam.date }})
+                <!-- Start Exam Button -->
+                <form action="{{ url_for('main.start_exam') }}" method="post" style="display:inline;">
+                    <input type="hidden" name="student_id" value="{{ student.id }}">
+                    <input type="hidden" name="exam_id" value="{{ exam.id }}">
+                    <button type="submit" class="btn btn-primary btn-sm">Start Exam</button>
+                </form>
+            </li>
+            {% else %}
+            <li class="list-group-item">No available exams at the moment.</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <!-- Results Section -->
+        <h3>Your Results:</h3>
+        
+        <!-- Go Back to Home Button -->
+        <a href="{{ url_for('main.home') }}" class="btn btn-secondary mt-3">Back to Home</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

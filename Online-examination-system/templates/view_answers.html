@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Answers</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Additional custom styles */
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Student: {{ student.name }} (ID: {{ student_id }})</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Question ID</th>
+                    <th>Answer</th>
+                    <th>Marks</th>
+                    <th>View Metrics</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total_marks = 0 %}
+                {% if answers %}
+                    {% for answer in answers %}
+                    <tr>
+                        <td>{{ answer.question_id }}</td>
+                        <td>{{ answer.answer_text }}</td>
+                        <td>
+                            {% set evaluation = evaluations_dict[answer.question_id] if answer.question_id in evaluations_dict else None %}
+                            {% if evaluation and evaluation.predicted_marks is not none %}
+                                {{ evaluation.predicted_marks }}
+                                {% set total_marks = total_marks + evaluation.predicted_marks %}
+                            {% else %}
+                                Not Set
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-info" href="{{ url_for('main.view_metrics', student_id=student_id, question_id=answer.question_id) }}">View Metrics</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">No answers available for this student.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <!-- Display Total Marks -->
+        <h3>Total Marks: {{ total_marks }}</h3>
+
+        <a class="btn btn-secondary mt-3" href="{{ url_for('main.evaluator_dashboard') }}">Back to Dashboard</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

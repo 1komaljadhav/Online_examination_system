@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+</head>
+<body>
+    <h1>Add a New Question</h1>
+    
+    <form id="addQuestionForm">
+        <label for="question_text">Question:</label><br>
+        <textarea id="question_text" name="question_text" rows="4" cols="50" required></textarea><br><br>
+        
+        <label for="model_answer">Model Answer:</label><br>
+        <textarea id="model_answer" name="model_answer" rows="4" cols="50" required></textarea><br><br>
+        
+        <input type="hidden" id="evaluator_id" name="evaluator_id" value="1">  <!-- Evaluator ID fetched from session -->
+        
+        <input type="submit" value="Add Question">
+    </form>
+    
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('addQuestionForm').onsubmit = async function(event) {
+            event.preventDefault();
+            
+            const formData = {
+                question_text: document.getElementById('question_text').value,
+                model_answer: document.getElementById('model_answer').value,
+                evaluator_id: document.getElementById('evaluator_id').value
+            };
+
+            try {
+                const response = await fetch('/add_question', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                document.getElementById('response').innerText = result.message;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('response').innerText = 'Failed to add question';
+            }
+        };
+    </script>
+</body>
+</html>

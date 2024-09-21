@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Evaluation</title>
+</head>
+<body>
+    <h1>{{ student.name }} - Question {{ question.id }}</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Answer</th>
+                <th>View Metrics</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for answer in answers %}
+            <tr>
+                <td>{{ answer.answer }}</td>
+                <td>
+                    <a href="{{ url_for('main.view_metrics', student_id=student.id, question_id=question.id) }}">View Metrics</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('main.evaluator_dashboard') }}">Back to Evaluator Dashboard</a>
+</body>
+</html>
